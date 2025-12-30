@@ -22,6 +22,7 @@ function LoginPage() {
     signin(data);
   });
 
+
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
