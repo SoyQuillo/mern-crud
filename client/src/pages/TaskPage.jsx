@@ -15,11 +15,11 @@ function TaskPage() {
   return <div className="grid grid-cols-3 gap-2">
     {
       tasks.map(task => (
-       <TaskCard task={task} key={task.id}/>
+       <TaskCard task={task} key={task._id}/>
       )  )
     }
 
-  </div>;
+  </div>; 
 }
 
 export default TaskPage;

@@ -9,7 +9,8 @@ export const getTasks = async (req, res) => {
 };
 
 export const CreateTask = async (req, res) => {
-  const { title, description, date } = req.body;
+  try{
+const { title, description, date } = req.body;
 
   console.log(req.user);
 
@@ -23,30 +24,46 @@ export const CreateTask = async (req, res) => {
   const saveTask = await newTask.save();
 
   res.json(saveTask);
+  }catch(e){
+    return res.status(404).json({ msg: "Task not found" });
+  }
+  
 };
 
 export const getTask = async (req, res) => {
-  const task = await Task.findById(req.params.id).populate("user");
+  try {
+    const task = await Task.findById(req.params.id).populate("user");
 
-  if (!task) return res.status(404).json({ msg: "Task not found" });
+    if (!task) return res.status(404).json({ msg: "Task not found" });
 
-  res.json(task);
+    res.json(task);
+  } catch (e) {
+    return res.status(404).json({ msg: "Task not found" });
+  }
 };
 
 export const deleteTask = async (req, res) => {
-  const task = await Task.findByIdAndDelete(req.params.id);
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id);
 
-  if (!task) return res.status(404).json({ msg: "Task not found" });
+    if (!task) return res.status(404).json({ msg: "Task not found" });
 
-  return res.sendStatus(204);
+    return res.sendStatus(204);
+  } catch (e) {
+    return res.status(404).json({ msg: "Task not found" });
+  }
 };
 
 export const updateTask = async (req, res) => {
-  const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
-  if (!task) return res.status(404).json({ msg: "Task not found" });
+    if (!task) return res.status(404).json({ msg: "Task not found" });
 
-  res.json(task);
+    res.json(task);
+  } catch (e) {
+    return res.status(404).json({ msg: "Task not found" });
+  }
 };
